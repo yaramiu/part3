@@ -65,6 +65,10 @@ app.post("/api/persons", (request, response) => {
     return response.status(400).json({ error: "number missing" });
   }
 
+  const isExistingName = persons.find((person) => person.name === body.name);
+  if (isExistingName)
+    return response.status(400).json({ error: "name exists" });
+
   const person = {
     id: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER),
     name: body.name,
