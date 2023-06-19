@@ -3,6 +3,9 @@ const app = express();
 
 app.use(express.json());
 
+const logger = require("morgan");
+app.use(logger("tiny"));
+
 let persons = [
   {
     id: 1,
