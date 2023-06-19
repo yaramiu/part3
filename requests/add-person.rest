@@ -1,0 +1,31 @@
+// create person
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "Aoba Suzukaze",
+    "number": "75 830 9681"
+}
+
+###
+// create person without name and number
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+###
+// create person without name
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "number": "75 744 3951"
+}
+
+###
+// create person without number
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "Nene Sakura"
+}
