@@ -1,10 +1,21 @@
 const express = require("express");
+const morgan = require("morgan");
+
 const app = express();
 
 app.use(express.json());
 
-const logger = require("morgan");
-app.use(logger("tiny"));
+const createPersonToken = (object) => {
+  return morgan.token("persons", function (request, response) {
+    if (!object) return " ";
+    return JSON.stringify(object);
+  });
+};
+app.use(
+  morgan(
+    ":method :url :status :res[content-length] - :response-time ms :persons"
+  )
+);
 
 let persons = [
   {
@@ -30,16 +41,19 @@ let persons = [
 ];
 
 app.get("/api/persons", (request, response) => {
+  createPersonToken();
   response.json(persons);
 });
 
 app.get("/info", (request, response) => {
+  createPersonToken();
   const currentDate = new Date();
   response.send(`<p>Phonebook has info for ${persons.length} people</p>
   <p>${currentDate}</p>`);
 });
 
 app.get("/api/persons/:id", (request, response) => {
+  createPersonToken();
   const id = Number(request.params.id);
 
   const person = persons.find((person) => person.id === id);
@@ -52,6 +66,7 @@ app.get("/api/persons/:id", (request, response) => {
 });
 
 app.delete("/api/persons/:id", (request, response) => {
+  createPersonToken();
   const id = Number(request.params.id);
 
   persons = persons.filter((person) => person.id !== id);
@@ -63,14 +78,21 @@ app.post("/api/persons", (request, response) => {
   const body = request.body;
 
   if (!body.name) {
-    return response.status(400).json({ error: "name missing" });
+    const nameMissingError = { error: "name missing" };
+    createPersonToken(nameMissingError);
+    return response.status(400).json(nameMissingError);
   } else if (!body.number) {
-    return response.status(400).json({ error: "number missing" });
+    const numberMissingError = { error: "number missing" };
+    createPersonToken(numberMissingError);
+    return response.status(400).json(numberMissingError);
   }
 
   const isExistingName = persons.find((person) => person.name === body.name);
-  if (isExistingName)
-    return response.status(400).json({ error: "name exists" });
+  if (isExistingName) {
+    const nameExistsError = { error: "name exists" };
+    createPersonToken(nameExistsError);
+    return response.status(400).json(nameExistsError);
+  }
 
   const person = {
     id: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER),
@@ -79,6 +101,13 @@ app.post("/api/persons", (request, response) => {
   };
 
   persons = persons.concat(person);
+
+  const personLog = {
+    name: body.name,
+    number: body.number,
+  };
+
+  createPersonToken(personLog);
 
   response.json(person);
 });
