@@ -1,0 +1,6 @@
+// get all
+GET https://spring-meadow-6832.fly.dev/api/persons/
+
+###
+// get one
+GET https://spring-meadow-6832.fly.dev/api/persons/1

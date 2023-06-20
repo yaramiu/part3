@@ -1,0 +1,6 @@
+// delete person
+DELETE https://spring-meadow-6832.fly.dev/api/persons/1
+
+###
+// delete non-existent person
+DELETE https://spring-meadow-6832.fly.dev/api/persons/5
