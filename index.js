@@ -70,7 +70,7 @@ app.delete("/api/persons/:id", (request, response) => {
   response.status(204).end();
 });
 
-app.post("/api/persons", (request, response) => {
+app.post("/api/persons", async (request, response) => {
   const body = request.body;
 
   if (!body.name) {
@@ -83,21 +83,6 @@ app.post("/api/persons", (request, response) => {
     return response.status(400).json(numberMissingError);
   }
 
-  const isExistingName = persons.find((person) => person.name === body.name);
-  if (isExistingName) {
-    const nameExistsError = { error: "name exists" };
-    createPersonToken(nameExistsError);
-    return response.status(400).json(nameExistsError);
-  }
-
-  const person = {
-    id: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER),
-    name: body.name,
-    number: body.number,
-  };
-
-  persons = persons.concat(person);
-
   const personLog = {
     name: body.name,
     number: body.number,
@@ -105,7 +90,17 @@ app.post("/api/persons", (request, response) => {
 
   createPersonToken(personLog);
 
-  response.json(person);
+  const person = new Person({
+    name: body.name,
+    number: body.number,
+  });
+
+  try {
+    const savedPerson = await person.save();
+    response.json(savedPerson);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 const PORT = process.env.PORT;
