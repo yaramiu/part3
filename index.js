@@ -1,6 +1,16 @@
+require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
+let Person;
+(async () => {
+  try {
+    Person = await require("./models/person");
+  } catch (error) {
+    console.error(error);
+    process.exit();
+  }
+})();
 
 const app = express();
 
@@ -20,32 +30,15 @@ app.use(
   )
 );
 
-let persons = [
-  {
-    id: 1,
-    name: "Arto Hellas",
-    number: "040-123456",
-  },
-  {
-    id: 2,
-    name: "Ada Lovelace",
-    number: "39-44-5323523",
-  },
-  {
-    id: 3,
-    name: "Dan Abramov",
-    number: "12-43-234345",
-  },
-  {
-    id: 4,
-    name: "Mary Poppendieck",
-    number: "39-23-6423122",
-  },
-];
-
-app.get("/api/persons", (request, response) => {
+app.get("/api/persons", async (request, response) => {
   createPersonToken();
-  response.json(persons);
+
+  try {
+    const savedPersons = await Person.find({});
+    response.json(savedPersons);
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 app.get("/info", (request, response) => {
@@ -115,7 +108,7 @@ app.post("/api/persons", (request, response) => {
   response.json(person);
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });

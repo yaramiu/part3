@@ -7,10 +7,10 @@ async function saveOrGetDataFromMongoDB() {
 
   const password = process.argv[2];
 
-  const uri = `mongodb+srv://fullstack:${password}@cluster0.8oocm9l.mongodb.net/phonebook?retryWrites=true&w=majority`;
+  const url = `mongodb+srv://fullstack:${password}@cluster0.8oocm9l.mongodb.net/phonebook?retryWrites=true&w=majority`;
 
   mongoose.set("strictQuery", false);
-  mongoose.connect(uri);
+  mongoose.connect(url);
 
   const personSchema = new mongoose.Schema({
     name: String,
