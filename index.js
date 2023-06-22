@@ -24,20 +24,21 @@ const createPersonToken = (object) => {
     return JSON.stringify(object);
   });
 };
+
 app.use(
   morgan(
     ":method :url :status :res[content-length] - :response-time ms :persons"
   )
 );
 
-app.get("/api/persons", async (request, response) => {
+app.get("/api/persons", async (request, response, next) => {
   createPersonToken();
 
   try {
     const savedPersons = await Person.find({});
     response.json(savedPersons);
   } catch (error) {
-    console.error(error);
+    next(error);
   }
 });
 
@@ -61,18 +62,18 @@ app.get("/api/persons/:id", (request, response) => {
   }
 });
 
-app.delete("/api/persons/:id", async (request, response) => {
+app.delete("/api/persons/:id", async (request, response, next) => {
   createPersonToken();
 
   try {
     await Person.findByIdAndRemove(request.params.id);
     response.status(204).end();
   } catch (error) {
-    console.error(error);
+    next(error);
   }
 });
 
-app.post("/api/persons", async (request, response) => {
+app.post("/api/persons", async (request, response, next) => {
   const body = request.body;
 
   if (!body.name) {
@@ -101,9 +102,21 @@ app.post("/api/persons", async (request, response) => {
     const savedPerson = await person.save();
     response.json(savedPerson);
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 });
+
+const errorHandler = (error, request, response, next) => {
+  console.log(error);
+
+  if (error.name === "CastError") {
+    response.status(400).send({ error: "malformatted id" });
+  }
+
+  next(error);
+};
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
