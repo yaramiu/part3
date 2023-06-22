@@ -42,23 +42,31 @@ app.get("/api/persons", async (request, response, next) => {
   }
 });
 
-app.get("/info", (request, response) => {
+app.get("/info", async (request, response, next) => {
   createPersonToken();
+
   const currentDate = new Date();
-  response.send(`<p>Phonebook has info for ${persons.length} people</p>
+  try {
+    const persons = await Person.find({});
+    response.send(`<p>Phonebook has info for ${persons.length} people</p>
   <p>${currentDate}</p>`);
+  } catch (error) {
+    next(error);
+  }
 });
 
-app.get("/api/persons/:id", (request, response) => {
+app.get("/api/persons/:id", async (request, response, next) => {
   createPersonToken();
-  const id = Number(request.params.id);
 
-  const person = persons.find((person) => person.id === id);
-
-  if (person) {
-    response.json(person);
-  } else {
-    response.status(404).end();
+  try {
+    const searchedPerson = await Person.findById(request.params.id);
+    if (searchedPerson) {
+      response.json(searchedPerson);
+    } else {
+      response.status(404).end();
+    }
+  } catch (error) {
+    next(error);
   }
 });
 
