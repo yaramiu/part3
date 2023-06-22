@@ -10,7 +10,11 @@ async function saveOrGetDataFromMongoDB() {
   const url = `mongodb+srv://fullstack:${password}@cluster0.8oocm9l.mongodb.net/phonebook?retryWrites=true&w=majority`;
 
   mongoose.set("strictQuery", false);
-  mongoose.connect(url);
+  try {
+    await mongoose.connect(url);
+  } catch (error) {
+    console.error(error);
+  }
 
   const personSchema = new mongoose.Schema({
     name: String,
@@ -41,7 +45,11 @@ async function saveOrGetDataFromMongoDB() {
     }
   }
 
-  mongoose.connection.close();
+  try {
+    await mongoose.connection.close();
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 saveOrGetDataFromMongoDB();
