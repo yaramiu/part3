@@ -106,6 +106,24 @@ app.post("/api/persons", async (request, response, next) => {
   }
 });
 
+app.put("/api/persons/:id", async (request, response, next) => {
+  const person = {
+    name: request.body.name,
+    number: request.body.number,
+  };
+
+  try {
+    const updatedPerson = await Person.findByIdAndUpdate(
+      request.params.id,
+      person,
+      { new: true }
+    );
+    response.json(updatedPerson);
+  } catch (error) {
+    next(error);
+  }
+});
+
 const errorHandler = (error, request, response, next) => {
   console.log(error);
 
