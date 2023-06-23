@@ -17,7 +17,16 @@ module.exports = (async function getPersonModel() {
       type: String,
       minLength: 3,
     },
-    number: String,
+    number: {
+      type: String,
+      minLength: 8,
+      validate: {
+        validator: (phoneNumber) => {
+          return phoneNumber.match(/^\d{2}\d?-\d+$/);
+        },
+        message: (props) => `${props.value} is not a valid phone number`,
+      },
+    },
   });
 
   mongoose.set("toJSON", {

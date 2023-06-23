@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
     "name": "Aoba Suzukaze",
-    "number": "75 830 9681"
+    "number": "75-8309681"
 }
 
 ###
@@ -18,7 +18,7 @@ POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-    "number": "75 744 3951"
+    "number": "75-7443951"
 }
 
 ###
@@ -37,5 +37,41 @@ Content-Type: application/json
 
 {
     "name": "Ai",
-    "number": "75 869 3202"
+    "number": "75-8693202"
+}
+
+###
+// create person with a phone number length less than 8
+POST http://localhost:3001/api/persons/
+Content-Type: application/json
+
+{
+    "name": "Sakura Nene",
+    "number": "75-1651"
+}
+
+###
+// create person with invalid phone number format
+POST http://localhost:3001/api/persons/
+Content-Type: application/json
+
+{
+    "name": "Sakura Nene",
+    "number": "7-51651653"
+}
+###
+POST http://localhost:3001/api/persons/
+Content-Type: application/json
+
+{
+    "name": "Sakura Nene",
+    "number": "75-16-516531"
+}
+###
+POST http://localhost:3001/api/persons/
+Content-Type: application/json
+
+{
+    "name": "Sakura Nene",
+    "number": "75 165 1653"
 }

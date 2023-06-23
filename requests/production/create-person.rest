@@ -39,3 +39,39 @@ Content-Type: application/json
     "name": "Ai",
     "number": "75 869 3202"
 }
+
+###
+// create person with a phone number length less than 8
+POST https://spring-meadow-6832.fly.dev/api/persons
+Content-Type: application/json
+
+{
+    "name": "Sakura Nene",
+    "number": "75-1651"
+}
+
+###
+// create person with invalid phone number format
+POST https://spring-meadow-6832.fly.dev/api/persons
+Content-Type: application/json
+
+{
+    "name": "Sakura Nene",
+    "number": "7-51651653"
+}
+###
+POST https://spring-meadow-6832.fly.dev/api/persons
+Content-Type: application/json
+
+{
+    "name": "Sakura Nene",
+    "number": "75-16-516531"
+}
+###
+POST https://spring-meadow-6832.fly.dev/api/persons
+Content-Type: application/json
+
+{
+    "name": "Sakura Nene",
+    "number": "75 165 1653"
+}
