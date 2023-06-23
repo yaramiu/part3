@@ -5,3 +5,13 @@ Content-Type: application/json
     "name": "Aoba Suzukaze",
     "number": "75 744 3951"
 }
+
+###
+// update person with a name less than 3 characters
+PUT https://spring-meadow-6832.fly.dev/api/persons/649485be2b1739400d2b0ac9
+Content-Type: application/json
+
+{
+    "name": "Ai",
+    "number": "75 415 4816"
+}

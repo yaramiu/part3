@@ -29,3 +29,13 @@ Content-Type: application/json
 {
     "name": "Nene Sakura"
 }
+
+###
+// create person with name length of less than 3 characters
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "Ai",
+    "number": "75 869 3202"
+}
