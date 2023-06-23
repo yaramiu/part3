@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
     "name": "Aoba Suzukaze",
-    "number": "75 830 9681"
+    "number": "75-8309681"
 }
 
 ###
@@ -18,7 +18,7 @@ POST https://spring-meadow-6832.fly.dev/api/persons/
 Content-Type: application/json
 
 {
-    "number": "75 744 3951"
+    "number": "75-7443951"
 }
 
 ###
@@ -37,7 +37,7 @@ Content-Type: application/json
 
 {
     "name": "Ai",
-    "number": "75 869 3202"
+    "number": "75-8693202"
 }
 
 ###

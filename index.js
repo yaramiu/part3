@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.static("build"));
 
 const createPersonToken = (object) => {
-  return morgan.token("persons", function (request, response) {
+  return morgan.token("persons", function () {
     if (!object) return " ";
     return JSON.stringify(object);
   });
