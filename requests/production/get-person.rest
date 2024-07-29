@@ -1,6 +1,0 @@
-// get all
-GET https://spring-meadow-6832.fly.dev/api/persons/
-
-###
-// get one
-GET https://spring-meadow-6832.fly.dev/api/persons/649326c14de2227fa86beac8

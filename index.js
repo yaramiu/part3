@@ -1,22 +1,14 @@
-require("dotenv").config();
-const express = require("express");
-const morgan = require("morgan");
-const cors = require("cors");
-let Person;
-(async () => {
-  try {
-    Person = await require("./models/person");
-  } catch (error) {
-    console.error(error);
-    process.exit();
-  }
-})();
+import "dotenv/config";
+import express from "express";
+import morgan from "morgan";
+import cors from "cors";
+import Person from "./models/person.js";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static("build"));
+app.use(express.static("dist"));
 
 const createPersonToken = (object) => {
   return morgan.token("persons", function () {

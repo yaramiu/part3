@@ -2,8 +2,8 @@
 
 ## Link to REST API endpoint
 
-https://spring-meadow-6832.fly.dev/api/persons/
+https://yaramiu-phonebook.fly.dev/
 
 ## Link to app frontend
 
-https://spring-meadow-6832.fly.dev/
+https://yaramiu-phonebook.fly.dev/api/persons

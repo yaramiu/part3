@@ -1,6 +1,0 @@
-// get all
-GET http://localhost:3001/api/persons
-
-###
-// get one
-GET http://localhost:3001/api/persons/649326c14de2227fa86beac8
